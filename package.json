@@ -1,0 +1,9 @@
+{
+  "name": "jb-auth-service",
+  "version": "0.0.1",
+  "description": "Micro-service for proxy authentication",
+  "main": "index.js",
+  "repository": "https://github.com/yarnpkg/jb-auth-service",
+  "author": "Bairstow <joshbairstow@gmail.com>",
+  "license": "MIT"
+}
