@@ -7,7 +7,7 @@ const configAuth = require('./config/auth');
 const app = express();
 
 passport.use(new GoogleStrategy({
-    clientId: configAuth.googleAuth.clientId,
+    clientID: configAuth.googleAuth.clientID,
     clientSecret: configAuth.googleAuth.clientSecret,
     callbackURL: configAuth.googleAuth.callbackURL,
   }, (token, tokenSecret, profile, done) => {
@@ -16,6 +16,18 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+  console.log('Rendering home screen');
+  res.render('index.ejs');
+});
+
+app.get('/profile', (req, res) => {
+  console.log('Rendering profile screen');
+  res.render('profile.ejs');
+});
+
 app.get('/auth/google',
   passport.authenticate('google', {
     scope: ['https://www.googleapis.com/auth/plus.login']
@@ -23,22 +35,11 @@ app.get('/auth/google',
 );
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    console.log('Auth redirect to root taking place');
-    res.redirect('/');
-  }
+  passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+  })
 );
-
-app.get('/login', (req, res) => {
-  console.log('Rendering login screen');
-  res.render('views/login.html');
-});
-
-app.get('/', (req, res) => {
-  console.log('Rendering home screen');
-  res.render('views/index.html');
-});
 
 app.listen(4200, () => {
   console.log('Test app is listening on port 4200');
