@@ -1,20 +1,9 @@
 const express = require('express');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-const configAuth = require('./config/auth');
+const passportConfig = require('./config/passport')(passport);
 
 const app = express();
-
-passport.use(new GoogleStrategy({
-    clientID: configAuth.googleAuth.clientID,
-    clientSecret: configAuth.googleAuth.clientSecret,
-    callbackURL: configAuth.googleAuth.callbackURL,
-  }, (token, tokenSecret, profile, done) => {
-    console.log({ token, tokenSecret, profile });
-    done();
-  }
-));
+app.use(passport.initialize());
 
 app.set('view engine', 'ejs');
 
