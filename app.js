@@ -1,9 +1,13 @@
 const express = require('express');
+const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./config/passport')(passport);
+const sessionConfig = require('./config/session');
 
 const app = express();
+app.use(session(sessionConfig));
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('view engine', 'ejs');
 
