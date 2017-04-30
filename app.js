@@ -34,6 +34,12 @@ app.get('/auth/google/callback',
   })
 );
 
+app.get('/logout', (req, res) => {
+  console.log('Logging out current session');
+  req.logout();
+  res.redirect('/');
+});
+
 app.listen(4200, () => {
   console.log('Test app is listening on port 4200');
 });
